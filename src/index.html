@@ -8,17 +8,24 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <load ="partials/header.html" />
+    <div class="block">
+      <form class="form-inline search-form js-search-form" data-id="1">
+        <div class="form-group m-2">
+          <input
+            type="text"
+            class="js-input form-control"
+            name="query"
+            placeholder="Search"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+    <ul class="js-gallery gallery"></ul>
 
-    <section>
-      <h1>Example page title</h1>
-      <!-- Path to images as from index.html file -->
-      <img src="./img/javascript.svg" alt="" />
-    </section>
+    <div class="loader js-loader" style="display: none">Loading</div>
 
-    <!-- Loads the specified .html file -->
-    <load ="partials/vite-promo.html" />
-
-    <script type="module" src="./main.js"></script>
+    <!-- <script type="module" src="./js/pixabay-api.js"></script> -->
+    <script type="module" src="./js/render-functions.js"></script>
   </body>
 </html>
