@@ -9,6 +9,10 @@ export class PIXABAY_API {
     this.page = 1;
     this.totalHits = 0;
   }
+  setDefaults() {
+    this.page = 1;
+    this.totalHits = 0;
+  }
   async getImages() {
     const params = {
       q: this.query,
@@ -17,12 +21,16 @@ export class PIXABAY_API {
       orientation: 'horizontal',
       safesearch: true,
       page: this.page,
-      pageSize: this.PAGE_SIZE,
+      per_page: PIXABAY_API.PAGE_SIZE,
     };
 
     const url = `${this.BASE_URL}${this.END_POINT}?${params}`;
     const res = await axios.get(url, { params });
-    // this.totalHits = res.data.totalHits;
+    this.totalHits = res.data.totalHits;
     return res.data;
+  }
+  isLastPage() {
+    const maxPage = Math.ceil(this.totalHits / PIXABAY_API.PAGE_SIZE);
+    return maxPage <= this.page;
   }
 }
