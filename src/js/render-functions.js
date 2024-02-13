@@ -153,7 +153,7 @@ const options = {
 const callback = function (entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      loadImages();
+      onLoaderMoreClick();
     }
   });
 };
