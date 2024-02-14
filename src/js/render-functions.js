@@ -51,16 +51,19 @@ async function formSubmit(e) {
 refs.btnLoader.addEventListener('click', onLoaderMoreClick);
 
 async function onLoaderMoreClick(e) {
-  e.preventDefault();
+  if (e) {
+    e.preventDefault();
+  }
 
+  if (e && e.target.id === 'js-btn-load') {
+    loadImages();
+  }
   pixabay_api.page += 1;
-
-  loadImages();
 }
 
 async function loadImages() {
   refs.loaderEl.style.display = 'block';
-  observerCkeckedLastPage();
+
   try {
     const searchData = await pixabay_api.getImages();
     if (searchData.hits.length === 0) {
@@ -77,6 +80,7 @@ async function loadImages() {
   } finally {
     refs.loaderEl.style.display = 'none';
   }
+  observerCkeckedLastPage();
 }
 
 function renderImage(data) {
@@ -154,10 +158,10 @@ const callback = function (entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       onLoaderMoreClick();
+      observerCkeckedLastPage();
     }
   });
 };
 const observer = new IntersectionObserver(callback, options);
-console.log(observer);
 
 observer.observe(refs.targetElem);
