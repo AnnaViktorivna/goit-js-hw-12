@@ -1,3 +1,4 @@
+'use strict';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
@@ -54,11 +55,10 @@ async function onLoaderMoreClick(e) {
   if (e) {
     e.preventDefault();
   }
-
+  pixabay_api.page += 1;
   if (e && e.target.id === 'js-btn-load') {
     loadImages();
   }
-  pixabay_api.page += 1;
 }
 
 async function loadImages() {
