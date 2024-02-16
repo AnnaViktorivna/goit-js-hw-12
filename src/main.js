@@ -51,13 +51,10 @@ async function formSubmit(e) {
 }
 
 async function onLoaderMoreClick(e) {
-  if (e) {
-    e.preventDefault();
-  }
+  e.preventDefault();
+
   pixabay_api.page += 1;
-  if (e && e.target.id === 'js-btn-load') {
-    loadImages();
-  }
+  loadImages();
 }
 
 async function loadImages() {
@@ -71,7 +68,7 @@ async function loadImages() {
     }
 
     const markup = await renderImage(searchData);
-    refs.listEl.innerHTML += markup;
+    refs.listEl.insertAdjacentHTML('beforeend', markup);
 
     gallerySimpleLightbox.refresh();
     showLoadBtnIfNeeded();

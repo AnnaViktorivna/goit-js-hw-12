@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export class PIXABAY_API {
-  static PAGE_SIZE = 60;
+  static PAGE_SIZE = 15;
   constructor() {
     this.BASE_URL = 'https://pixabay.com/api/';
     this.END_POINT = '';
