@@ -39,7 +39,7 @@ async function formSubmit(e) {
   imgName = imgName ? imgName.trim() : '';
   if (imgName === '') {
     showLoadBtnIfNeeded();
-    showError('Enter correct data!');
+    showError('Your query is empty! Please try enter your query again!');
     return;
   }
 
@@ -50,8 +50,8 @@ async function formSubmit(e) {
   loadImages();
 }
 
-async function onLoaderMoreClick(e) {
-  e.preventDefault();
+async function onLoaderMoreClick() {
+  //   e.preventDefault();
 
   pixabay_api.page += 1;
   loadImages();
@@ -73,12 +73,22 @@ async function loadImages() {
     gallerySimpleLightbox.refresh();
     showLoadBtnIfNeeded();
     checkEndOfCollection();
+
+    // Отримуємо висоту однієї карточки галереї
+    const cardHeight = document
+      .querySelector('.gallery-item')
+      .getBoundingClientRect().height;
+
+    // Плавна прокрутка сторінки на дві висоти карточки галереї
+    window.scrollBy({
+      top: cardHeight * 2, // Прокрутити на дві висоти карточки галереї
+      behavior: 'smooth', // Плавна анімація
+    });
   } catch (error) {
     showError('An error occurred. Please try again later.');
   } finally {
     refs.loaderEl.style.display = 'none';
   }
-  observerCkeckedLastPage();
 }
 
 function clearGallery() {
@@ -112,24 +122,3 @@ function showLoadBtnIfNeeded() {
     refs.btnLoader.classList.remove('hidden');
   }
 }
-
-function observerCkeckedLastPage() {
-  if (pixabay_api.isLastPage()) observer.unobserve(refs.targetElem);
-}
-
-const options = {
-  root: document.querySelector('#scrollArea'),
-  rootMargin: '0px',
-  threshold: 1.0,
-};
-const callback = function (entries, observer) {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      onLoaderMoreClick();
-      observerCkeckedLastPage();
-    }
-  });
-};
-const observer = new IntersectionObserver(callback, options);
-
-observer.observe(refs.targetElem);
